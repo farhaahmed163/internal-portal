@@ -15,6 +15,9 @@
       </div>
     </div>
     <!-- start job offers -->
+    @if(spinner){
+    <app-spinner></app-spinner>
+    }@else{
     @for (edge of jobsData; track $index) {
     <div class="offer p-4 mt-4">
       <p class="text-secondary fw-light time">{{edge.node.createdDateTime|time}}</p>
@@ -28,6 +31,8 @@
 
     </div>
     }
+    }
+
     <!-- end of offers  -->
 
 
