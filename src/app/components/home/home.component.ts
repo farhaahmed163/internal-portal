@@ -45,6 +45,11 @@ export class HomeComponent {
         this.spinner = false;
         console.log(res, '🫡🫡🫡🫡🫡🫡');
         this.jobsData = res.data.data.marketplaceJobPostings.edges;
+        this.jobsData.sort(
+          (a, b) =>
+            new Date(b.node.createdDateTime).getTime() -
+            new Date(a.node.createdDateTime).getTime()
+        );
         console.log(this.jobsData, '🍰🍰🍰🍰🍰');
       },
       error: (err: HttpErrorResponse) => {
