@@ -26,16 +26,16 @@
         <img src="../../../assets/like (2) 2.png" alt="like" width="30">
       </div>
       <p class="text-center py-3 fw-light job-desc">{{edge.node.description|text:400}}</p>
-      <div class="d-flex flex-row-reverse"><button class="btn Ai" (click)="getPrposla(edge.node.description)">Generate
+      <div class="d-flex flex-row-reverse"><button class="btn Ai"
+          (click)="getPrposla(edge.node.description,edge,element)" #element>Generate
           AI
-          @if(loading){
+          @if(edge.loading){
           <span><i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i></span>
           }
 
         </button></div>
-
-
     </div>
+
     }
     }
 
@@ -45,3 +45,10 @@
 
   </div>
 </section>
+
+<p-dialog header="Proposal" [(visible)]="visible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  <p>
+    {{proposal}}
+  </p>
+</p-dialog>
