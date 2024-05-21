@@ -26,6 +26,7 @@ export class HomeComponent {
   jobsData: any[] = [];
   postsSubscription!: Subscription;
   spinner: boolean = false;
+  loading: boolean = false;
   constructor(private UpworkService: UpworkService) {}
 
   ngOnInit(): void {
@@ -42,6 +43,18 @@ export class HomeComponent {
       },
       error: (err: HttpErrorResponse) => {
         this.spinner = true;
+        console.log(err);
+      },
+    });
+  }
+  getPrposla(offer: string) {
+    this.loading = true;
+    this.UpworkService.getProposal(offer).subscribe({
+      next: (res) => {
+        this.loading = false;
+        console.log(res.data);
+      },
+      error: (err: HttpErrorResponse) => {
         console.log(err);
       },
     });

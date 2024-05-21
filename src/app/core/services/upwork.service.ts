@@ -13,4 +13,8 @@ export class UpworkService {
   getFilterdJobs(): Observable<any> {
     return this.HttpClient.get(`${this.apiUrl}/graphql/listFilteredJobs`);
   }
+  getProposal(offer: string): Observable<any> {
+    const body = { offer };
+    return this.HttpClient.post(`${this.apiUrl}/gemini/run-prediction`, body);
+  }
 }
