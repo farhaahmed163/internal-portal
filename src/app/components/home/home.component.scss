@@ -31,6 +31,10 @@
     padding: 15px;
 
   }
+
+  .job-desc {
+    word-wrap: break-word;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
