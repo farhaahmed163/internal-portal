@@ -7,7 +7,10 @@ import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { SpinnerComponent } from '../shared/spinner/spinner.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DialogModule } from 'primeng/dialog';
+import { Dialog, DialogModule } from 'primeng/dialog';
+import { SanatizerPipe } from '../../core/pipes/sanatizer.pipe';
+import { ToastService } from '../../core/services/toast.service';
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -18,6 +21,7 @@ import { DialogModule } from 'primeng/dialog';
     TimePipe,
     SpinnerComponent,
     DialogModule,
+    SanatizerPipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -29,10 +33,12 @@ export class HomeComponent {
   spinner: boolean = false;
   loading: boolean = false;
   visible: boolean = false;
-  proposal: [] = [];
+  proposal!: string;
+  jobIndex!: number;
   constructor(
     private UpworkService: UpworkService,
-    private Renderer2: Renderer2
+    private Renderer2: Renderer2,
+    private ToastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -55,25 +61,39 @@ export class HomeComponent {
       error: (err: HttpErrorResponse) => {
         this.spinner = true;
         console.log(err);
+        this.ToastService.showError(err.error.message);
       },
     });
   }
-  getPrposla(offer: string, edge: any, element: HTMLButtonElement) {
+  getPrposla(
+    offer: string,
+    edge: any,
+    element: HTMLButtonElement,
+    index: number
+  ) {
     this.Renderer2.setAttribute(element, 'disabled', 'true');
     edge.loading = true;
     this.UpworkService.getProposal(offer).subscribe({
       next: (res) => {
         edge.loading = false;
         console.log(res.data);
+        console.log(typeof res.data);
         this.proposal = res.data;
         this.visible = true;
         this.Renderer2.removeAttribute(element, 'disabled');
+        this.jobIndex = index;
       },
       error: (err: HttpErrorResponse) => {
         edge.loading = false;
         console.log(err);
       },
     });
+  }
+
+  openJob() {
+    let url = this.jobsData[this.jobIndex].node.url;
+    window.open(url);
+    console.log(url, '🐧🐧🐧🐧🐧🐧🐧');
   }
 
   ngOnDestroy(): void {
