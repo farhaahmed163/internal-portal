@@ -89,7 +89,9 @@ export class HomeComponent {
       },
     });
   }
-
+  openUpword(url: string) {
+    window.open(url);
+  }
   openJob() {
     let url = this.jobsData[this.jobIndex].node.url;
     window.open(url);

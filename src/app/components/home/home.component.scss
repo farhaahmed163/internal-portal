@@ -25,7 +25,7 @@
     border-radius: 30px;
     background: linear-gradient(to right, #43819C, #67CCF8);
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.25), 0 0 50px #67CCF8;
-    width: 300px;
+    width: 200px;
     border: none;
     color: #fff;
     padding: 15px;
@@ -97,4 +97,13 @@ p-dialog {
 
 button:focus {
   outline: none;
+}
+
+@media only screen and (max-width: 320px) {
+
+  .offer {
+    .Ai {
+      font-size: 14px;
+    }
+  }
 }

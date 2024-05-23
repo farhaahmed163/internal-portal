@@ -26,14 +26,15 @@
         <img src="../../../assets/like (2) 2.png" alt="like" width="30">
       </div>
       <p class="text-center py-3 fw-light job-desc">{{edge.node.description|text:400}}</p>
-      <div class="d-flex flex-row-reverse"><button class="btn Ai"
-          (click)="getPrposla(edge.node.description,edge,element,$index)" #element>Generate
+      <div class="d-flex flex-row-reverse gap-3">
+        <button class="btn Ai" (click)="getPrposla(edge.node.description,edge,element,$index)" #element>Generate
           AI
           @if(edge.loading){
           <span><i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i></span>
           }
-
-        </button></div>
+        </button>
+        <button class="btn Ai" (click)="openUpword(edge.node.url)">Open Job</button>
+      </div>
     </div>
 
     }
