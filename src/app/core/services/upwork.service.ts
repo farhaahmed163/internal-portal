@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root',
 })
 export class UpworkService {
-  private apiUrl: string = 'https://geekyair-internal-system.onrender.com';
+  private apiUrl: string = 'https://geekyair-internal-system-1.onrender.com';
 
   constructor(private HttpClient: HttpClient) {}
 
