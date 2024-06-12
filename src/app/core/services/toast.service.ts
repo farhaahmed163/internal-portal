@@ -11,7 +11,7 @@ export class ToastService {
     this.messageService.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'Message Content',
+      detail: content,
     });
   }
 

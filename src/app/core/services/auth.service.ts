@@ -10,8 +10,8 @@ export class AuthService {
 
   constructor(private HttpClient: HttpClient) {}
 
-  login(): Observable<any> {
-    const body = {};
-    return this.HttpClient.post(`${this.apiUrl}/graphql/get-auth`, body);
+  login(email: string, password: string): Observable<any> {
+    const body = { email, password };
+    return this.HttpClient.post(`${this.apiUrl}/admins/login`, body);
   }
 }
