@@ -92,6 +92,15 @@ p-dialog {
     .job-desc {
       font-size: 14px;
     }
+
+    .lower {
+      flex-direction: column;
+    }
+
+    .Ai {
+      width: 130px;
+      padding: 10px;
+    }
   }
 }
 
