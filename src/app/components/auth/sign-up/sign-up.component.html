@@ -1,0 +1,20 @@
+<div class="container d-flex align-items-center justify-content-center  flex-column">
+  <img src="../../../../assets/login.jpg" alt="" width="330">
+  <form [formGroup]="signUpform" class="d-flex align-items-center justify-content-center w-50 flex-column">
+    <input type="text" class="form-control my-1 w-100" formControlName="business_name" placeholder="Business name :">
+    <input type="email" class="form-control my-1 w-100" formControlName="email" placeholder="Email :">
+    <input type="password" class="form-control my-1 w-100" formControlName="password" placeholder="Password :">
+    <input type="text" class="form-control my-1 w-100" formControlName="username" placeholder="User Name :">
+    <input type="text" class="form-control my-1 w-100" formControlName="phone" placeholder="Phone :">
+    <input type="text" class="form-control my-1 w-100" formControlName="full_address" placeholder="Full Address :">
+    <!-- <input type="text" class="form-control my-2 w-100" formControlName="CLIENT_SECRET" placeholder="CLIENT_SECRET"> -->
+
+    <button class="btn Ai" type="submit" #element (click)="signUp()" [disabled]="loading||signUpform.invalid">Sign Up
+      @if(loading){
+      <span><i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i></span>
+      }
+    </button>
+    <a class="login" routerLink="/login">Do you have an account ?Log in</a>
+
+  </form>
+</div>

@@ -12,6 +12,10 @@ export class AuthService {
 
   login(email: string, password: string): Observable<any> {
     const body = { email, password };
-    return this.HttpClient.post(`${this.apiUrl}/admins/login`, body);
+    return this.HttpClient.post(`${this.apiUrl}/businesses/login`, body);
+  }
+  signUp(signup: any): Observable<any> {
+    const body = signup;
+    return this.HttpClient.post(`${this.apiUrl}/businesses/signup`, body);
   }
 }

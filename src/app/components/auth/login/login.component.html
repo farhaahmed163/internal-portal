@@ -1,5 +1,5 @@
 <div class="container d-flex align-items-center justify-content-center  flex-column">
-  <img src="../../../../assets/log.jpg" alt="" width="500">
+  <img src="../../../../assets/log.jpg" alt="" width="400">
   <form [formGroup]="loginForm" class="d-flex align-items-center justify-content-center w-50 flex-column">
     <input type="text" class="form-control my-2 w-100" formControlName="email" placeholder="Enter Your Email :">
     <input type="password" class="form-control my-2 w-100" formControlName="password"
@@ -9,6 +9,7 @@
       <span><i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i></span>
       }
     </button>
-  </form>
+    <a class="joinus" routerLink="/signUp">Don't have an account ? Join Us</a>
 
+  </form>
 </div>
