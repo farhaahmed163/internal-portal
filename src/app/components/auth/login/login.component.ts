@@ -48,6 +48,8 @@ export class LoginComponent implements OnDestroy {
         console.log(res);
         this.Router.navigate(['/home']);
         localStorage.setItem('userToken', res.data.token);
+        localStorage.setItem('BusniessName', res.data.business_name);
+        localStorage.setItem('BusniessId', res.data.id);
         this.ToastService.showSuccess('Welcome To GeekyAir Portal ');
       },
       error: (err) => {
@@ -62,5 +64,8 @@ export class LoginComponent implements OnDestroy {
     if (this.loginSubscription && this.loginSubscription.closed) {
       this.loginSubscription.unsubscribe();
     }
+    // if (this.upworkAuthSubscription && this.upworkAuthSubscription.closed) {
+    //   this.upworkAuthSubscription.unsubscribe();
+    // }
   }
 }

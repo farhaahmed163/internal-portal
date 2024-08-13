@@ -1,0 +1,345 @@
+:host {
+  transition: all 500ms ease-in-out !important;
+}
+
+.side-header {
+  img {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .header-text {
+    height: 8rem;
+
+    h4 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+  }
+
+  .search-btn {
+    .p-button {
+
+      border-radius: 12px;
+      background: linear-gradient(to right, #43819C, #67CCF8);
+      border: none;
+    }
+  }
+
+  .hide-header-text {
+    opacity: 0;
+    height: 0px;
+  }
+}
+
+p-dialog {
+  .p-dialog-mask {
+    .p-dialog-resizable {
+      width: 75% !important;
+      min-height: 500px;
+
+      .p-dialog-content {
+
+        p-stepper {
+          .p-stepper-nav {
+            padding: 0;
+          }
+
+          ul {
+
+
+            li {
+              p-stepperheader {
+
+
+                button {
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 9px;
+                  padding: 0;
+                  border: 2px solid #E1E7EF;
+
+
+                  span {
+                    width: 100% !important;
+                    background-color: transparent !important
+                  }
+
+                  ;
+                }
+              }
+            }
+          }
+
+          .p-stepper-panels {
+            padding: 0;
+
+            form {
+
+
+              p-chips {
+                .p-chips {
+                  width: 100%;
+
+                  ul {
+                    width: 100% !important;
+                    padding: 5px 10px;
+                  }
+                }
+              }
+
+              .field-checkbox {
+                flex-direction: row;
+
+                p-radiobutton {
+                  .p-radiobutton {
+                    .p-highlight {
+                      span {
+                        background-color: #3B82F6;
+                      }
+                    }
+                  }
+                }
+              }
+
+              .multi-select {
+                p-multiselect {
+                  width: 100%;
+
+                  .p-multiselect {
+                    width: 100%;
+
+                    p-overlay {
+                      .p-overlay {
+                        .p-overlay-content {
+                          .p-multiselect-panel {
+                            .p-multiselect-items-wrapper {
+                              ul {
+                                padding: 0;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+
+              .hireRange,
+              .budgetRange {
+                align-items: center;
+
+                label {
+                  width: 25%;
+                }
+
+                p-inputnumber {
+                  width: 75%;
+
+                  span {
+                    width: 100%;
+
+                    .p-inputtext {
+                      width: 100%;
+                    }
+                  }
+                }
+              }
+
+              .payment {
+                label {
+                  width: 25%;
+                }
+              }
+
+              .skills {
+                flex-direction: row;
+                align-items: center;
+
+                label {
+                  width: 14.5%;
+                }
+
+                p-chips {
+                  width: 85%;
+                }
+              }
+
+              .level-of-exp {
+                flex-direction: row;
+                
+              }
+
+              .price {
+                label {
+                  width: 15%;
+                }
+
+                p-inputNumber {
+                  width: 85%;
+
+                  span {
+                    width: 100%;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+
+@media only screen and (max-width: 769px) {
+  p-dialog {
+    .p-dialog-mask {
+      .p-dialog-resizable {
+        .p-dialog-content {
+
+          p-stepper {
+
+
+            .p-stepper-panels {
+              form {
+
+                .hireRange,
+                .budgetRange {
+                  flex-direction: column;
+                  align-items: start;
+
+                  label {
+                    width: 100%;
+                  }
+
+                  p-inputNumber {
+                    width: 100%;
+                  }
+                }
+
+                .field-checkbox {
+                  flex-direction: column;
+                }
+
+                .payment {
+                  label {
+                    width: auto;
+                  }
+                }
+
+                .skills {
+                  flex-direction: column;
+                  align-items: start;
+
+                  label {
+                    width: 100%;
+                  }
+
+                  p-chips {
+                    width: 100%;
+                  }
+                }
+
+                .level-of-exp {
+                  flex-direction: column;
+                }
+
+                .client {
+                  flex-direction: column;
+
+                  label {
+                    width: 100% !important;
+                    margin-bottom: 10px;
+                  }
+                }
+
+                .price {
+                  flex-direction: column;
+
+                  label {
+                    width: 100%;
+                  }
+
+                  p-inputNumber {
+                    width: 100%;
+
+                    span {
+                      width: 100%;
+                    }
+
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
+
+@media only screen and (max-width: 433px) {
+  p-dialog {
+    .p-dialog-mask {
+      .p-dialog-resizable {
+        .p-dialog-content {
+
+          p-stepper {
+
+
+            .p-stepper-panels {
+              form {
+                .field-checkbox {
+                  flex-direction: column;
+                }
+
+
+                // p-chips {
+                //   .p-chips {
+                //     ul {
+                //       font-size: 13px;
+                //     }
+                //   }
+
+                // }
+
+                // input,
+                // .p-multiselect-label {
+                //   font-size: 13px;
+                // }
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+}
+
+
+
+.p-highlight {
+
+  button {
+
+    background-color: #3B82F6 !important;
+
+    span {
+      width: 100% !important;
+      background-color: transparent !important;
+
+      i {
+        color: #eee !important;
+        background-color: transparent !important;
+      }
+    }
+  }
+}

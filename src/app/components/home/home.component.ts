@@ -1,4 +1,10 @@
-import { Component, Renderer2, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  computed,
+  Renderer2,
+  signal,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { UpworkService } from '../../core/services/upwork.service';
 import { TextPipe } from '../../core/pipes/text.pipe';
@@ -10,6 +16,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Dialog, DialogModule } from 'primeng/dialog';
 import { SanatizerPipe } from '../../core/pipes/sanatizer.pipe';
 import { ToastService } from '../../core/services/toast.service';
+import { ButtonModule } from 'primeng/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { CustomSidenavComponent } from '../custom-sidenav/custom-sidenav.component';
+import { StepperModule } from 'primeng/stepper';
 
 @Component({
   selector: 'app-home',
@@ -22,14 +35,25 @@ import { ToastService } from '../../core/services/toast.service';
     SpinnerComponent,
     DialogModule,
     SanatizerPipe,
+    ButtonModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    CustomSidenavComponent,
+    StepperModule,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent {
+  collapsed = signal(false);
+  sideNavWidth = computed(() => (this.collapsed() ? '65px' : '250px'));
   jobsData: any[] = [];
   postsSubscription!: Subscription;
+  visiblemodal: boolean = false;
+  busName = localStorage.getItem('BusniessName');
   spinner: boolean = false;
   loading: boolean = false;
   visible: boolean = false;
@@ -96,6 +120,10 @@ export class HomeComponent {
     let url = this.jobsData[this.jobIndex].node.url;
     window.open(url);
     console.log(url, '🐧🐧🐧🐧🐧🐧🐧');
+  }
+
+  showDialog() {
+    this.visiblemodal = true;
   }
 
   ngOnDestroy(): void {

@@ -1,58 +1,88 @@
-<section class="main py-4">
-  <div class="container">
-    <!-- search with user-profile -->
-    <div class="head d-flex flex-row justify-content-between ">
-      <div class="d-flex align-items-center search">
+<section class="portal">
+  <div class=" ">
+    <!-- header start -->
+    <div class="head  py-2 d-flex flex-row justify-content-end px-3">
+      <mat-toolbar>
+        <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+          (click)="collapsed.set(!collapsed())">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <!-- <span>search</span> -->
+        <span class="example-spacer"></span>
 
-      </div>
-      <div class="d-flex flex-row justify-content-between align-items-center gap-4 justify-content-center user">
-        <p class="m-0">GeekyAir</p>
-        <img src="../../../assets/login (2) 2.png" alt="user-profile" width="40">
+      </mat-toolbar>
+
+      <div class="d-flex flex-row justify-content-between align-items-center gap-2 justify-content-center user me-3 ">
+        <div class="d-flex justify-content-center align-items-center gap-2">
+          <p class="m-0" style="width: 140px;">{{busName}}</p>
+          <img src="../../../assets/login (2) 2.png" alt="user-profile" width="40">
+        </div>
+        <button class="btn logout">logout</button>
       </div>
     </div>
-    <!-- start job offers -->
-    @if(spinner){
-    <app-spinner></app-spinner>
-    }@else{
-    @for (edge of jobsData; track $index) {
-    <div class="offer p-4 mt-4">
-      <p class="text-secondary fw-light time">{{edge.node.createdDateTime|time}}</p>
-
-      <div class="d-flex justify-content-between align-items-center">
-        <h4 class="fw-bold m-0 job-title">{{edge.node.title}}</h4>
-
-        <img src="../../../assets/like (2) 2.png" alt="like" width="30">
-      </div>
-      <p class="text-secondary ">{{edge.node.totalApplicants}} proposals</p>
-      <p class="text-center py-3 fw-light job-desc">{{edge.node.description|text:400}}</p>
-      <div class="d-flex justify-content-between gap-3 align-items-center lower">
-        <div>
-          <p class="m-0">{{edge.node.engagement}}</p>
-
-        </div>
-
-        <div class="d-flex gap-3">
-          <button class="btn Ai" (click)="getPrposla(edge.node.description,edge,element,$index)" #element>Generate
-            AI
-            @if(edge.loading){
-            <span><i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i></span>
-            }
-          </button>
-          <button class="btn Ai" (click)="openUpword(edge.node.url)">Open Job</button>
-        </div>
-      </div>
-    </div>
-
-    }
-    }
-
-    <!-- end of offers  -->
-
-
-
+    <!-- End header -->
   </div>
+  <mat-drawer-container class="example-container">
+    <!-- side bar -->
+    <mat-drawer mode="side" opened [style.width]="sideNavWidth()">
+      <app-custom-sidenav [collapsed]="collapsed()"></app-custom-sidenav>
+    </mat-drawer>
+    <!-- end sidebar -->
+
+    <!-- start content -->
+    <mat-drawer-content class="content" [style.margin-left]="sideNavWidth()">
+      <section class="main">
+        <div class="container">
+          <!-- start job offers -->
+          @if(spinner){
+          <app-spinner></app-spinner>
+          }@else{
+          @for (edge of jobsData; track $index) {
+          <div class="offer p-4 mt-4">
+            <p class="text-secondary fw-light time">{{edge.node.createdDateTime|time}}</p>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <h4 class="fw-bold m-0 job-title">{{edge.node.title}}</h4>
+
+              <img src="../../../assets/like (2) 2.png" alt="like" width="30">
+            </div>
+            <p class="text-secondary ">{{edge.node.totalApplicants}} proposals</p>
+            <p class="text-center py-3 fw-light job-desc">{{edge.node.description|text:400}}</p>
+            <div class="d-flex justify-content-between gap-3 align-items-center lower">
+              <div>
+                <p class="m-0">{{edge.node.engagement}}</p>
+
+              </div>
+
+              <div class="d-flex gap-3">
+                <button class="btn Ai" (click)="getPrposla(edge.node.description,edge,element,$index)" #element>Generate
+                  AI
+                  @if(edge.loading){
+                  <span><i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i></span>
+                  }
+                </button>
+                <button class="btn Ai" (click)="openUpword(edge.node.url)">Open Job</button>
+              </div>
+            </div>
+          </div>
+
+          }
+          }
+
+          <!-- end of offers  -->
+
+
+
+        </div>
+      </section>
+    </mat-drawer-content>
+    <!-- end content -->
+  </mat-drawer-container>
+
+
 </section>
 
+<!-- dialogs -->
 <p-dialog header="Proposal" [(visible)]="visible" footer="" [modal]="true"
   [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw' }" [draggable]="false"
   [resizable]="false">
@@ -66,4 +96,19 @@
     </div>
   </ng-template>
 
+</p-dialog>
+<p-dialog header="Edit Profile" [modal]="true" [(visible)]="visiblemodal" [style]="{ width: '25rem' }">
+  <span class="p-text-secondary block mb-5">Update your information.</span>
+  <div class="flex align-items-center gap-3 mb-3">
+    <label for="username" class="font-semibold w-6rem">Username</label>
+    <input pInputText id="username" class="flex-auto" autocomplete="off" />
+  </div>
+  <div class="flex align-items-center gap-3 mb-5">
+    <label for="email" class="font-semibold w-6rem">Email</label>
+    <input pInputText id="email" class="flex-auto" autocomplete="off" />
+  </div>
+  <div class="flex justify-content-end gap-2">
+    <p-button label="Cancel" severity="secondary" (onClick)="visible = false" />
+    <p-button label="Save" (onClick)="visible = false" />
+  </div>
 </p-dialog>

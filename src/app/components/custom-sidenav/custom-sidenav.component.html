@@ -1,0 +1,286 @@
+<div class="py-4 side-header pt-4 d-flex justify-content-center align-items-center flex-column">
+  <img src="../../../assets/1351592358348722176.jpg" alt="" [width]="profilePicSize()" [height]="profilePicSize()">
+  <div class="header-text pt-4" [class.hide-header-text]="sideNavCollapsed()">
+    <h4 class="text-center">Welcome to your portal !</h4>
+    <p class="text-center">{{busName}}</p>
+  </div>
+
+  <div class="search-btn">
+    @if(sideNavCollapsed()){
+    <p-button (onClick)="showDialog()" icon="pi pi-plus" />
+
+    }
+    @else {
+    <p-button (onClick)="showDialog()" icon="pi pi-plus" label="Add Search" />
+
+    }
+
+  </div>
+</div>
+
+<!-- dialog -->
+<p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+
+  <p-stepper [(activeStep)]="active">
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button class=" border-none inline-flex flex-column gap-2" (click)="onClick.emit()" [ngClass]="{
+          'bg-primary border-primary': index <= active,
+          'surface-border': index > active
+      }">
+          <span class="border-round border-2 bg-transparent inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+            'bg-primary border-primary': index <= active,
+            'surface-border': index > active
+        }">
+            <i class="pi pi-user " [ngClass]="{
+              'text-white border-primary': index <= active,
+              'surface-border': index > active
+          }"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template pTemplate="content" let-nextCallback="nextCallback">
+        <h4 class="p-text-secondary  mb-4">Business Data :</h4>
+        @if(isSubmitted){
+        <div class="d-flex justify-content-center align-items-center"> <i class="pi pi-spin pi-spinner"
+            style="font-size: 6rem"></i>
+        </div>
+        }
+        @else if (sucessFirst) {
+        <div class="alert alert-success text-center " role="alert">
+
+          {{sucessMessageFirst}}
+        </div> }
+        @else{
+        <form [formGroup]="firstForm" (ngSubmit)="firstFormSubmit()">
+
+          <input type="text" class="form-control my-3" placeholder="Search Expression"
+            formControlName="searchExpression">
+          <!-- **** -->
+          <input type="text" class="form-control my-3" placeholder="Title Expression" formControlName="titleExpression">
+          <!-- ***** -->
+          <p-chips formControlName="orTerms" placeholder="Add Your search terms sepreted with 'enter'"></p-chips>
+          <!-- ****** -->
+          <input type="text" class="form-control mb-3 py-2" placeholder="Exact term" formControlName="exactTerms_any">
+          <!-- ***** -->
+          <p-chips formControlName="andTerms_all" placeholder="Terms sepreted with enter"></p-chips>
+          <!-- ***** -->
+          <p-chips formControlName="excludeTerms"
+            placeholder="Add Your Execluded terms sepreted with 'enter'"></p-chips>
+          <!-- ***** -->
+          <div class="multi-select d-flex justify-content-center mb-3">
+            <p-multiSelect [options]="cat" [(ngModel)]="selectedCategories" optionLabel="name"
+              formControlName="categories" placeholder="Select Your Category" (onChange)="onCategorySelect()" />
+          </div>
+          <!-- ***** -->
+          <div class="multi-select d-flex justify-content-center mb-3 ">
+
+            <p-multiSelect formControlName="subCategories" [options]="groupedCategories" [group]="true"
+              [(ngModel)]="selectedSubcategories" placeholder="Select Subcategories" scrollHeight="250px" display="chip"
+              [disabled]="selectedCategories.length===0">
+              <ng-template let-group pTemplate="group">
+                <div class="flex align-items-center">
+                  <span>{{ group.label }}</span>
+                </div>
+              </ng-template>
+            </p-multiSelect>
+
+          </div>
+          <!-- ***** -->
+          <div class="field-checkbox d-flex justify-content-start gap-3 mb-4">
+            <label>Select Your jobType :</label>
+            @for (type of projType; track $index) {
+            <div class="d-flex gap-1"> <p-radioButton [inputId]="type" [value]="type" formControlName="jobType" />
+              <label [for]="type" class="ml-2">
+                {{ type }}
+              </label>
+            </div>
+            }
+          </div>
+          <!-- ***** -->
+          <div class="field-checkbox d-flex justify-content-start gap-3 mb-4">
+            <label>Select Your sortField :</label>
+            @for (field of sortField; track $index) {
+            <div class="d-flex gap-1"> <p-radioButton [inputId]="field" [value]="field" formControlName="sortField" />
+              <label [for]="field" class="ml-2">
+                {{ field }}
+              </label>
+            </div>
+            }
+          </div>
+          <!-- ***** -->
+          <div class="hireRange d-flex gap-2  mb-3">
+            <label for="minHire">Minmum Client Hires Range :</label>
+            <p-inputNumber [(ngModel)]="minRate" inputId="minHire" mode="decimal" [min]="0" [max]="100"
+              formControlName="clientHiresRangeStart" placeholder="Enter the minimal hires rang" />
+          </div>
+          <!-- ****** -->
+          <div class="hireRange d-flex gap-2 align-items-center mb-3">
+            <label for="maxHire">Maximum Client Hires Range :</label>
+            <p-inputNumber [(ngModel)]="maxRate" inputId="maxHire" mode="decimal" [min]="0" [max]="100"
+              formControlName="clientHiresRangeEnd" placeholder="Enter the Maximum hires rang" />
+          </div>
+          <!-- ****** -->
+          <div class="budgetRange d-flex gap-2 align-items-center mb-3">
+            <label for="minBud">Minimum Budget Range ($) :</label>
+            <p-inputNumber [(ngModel)]="minBudget " inputId="minBud" mode="decimal" [min]="0" [max]="100"
+              formControlName="budgetRangeStart" placeholder="Enter the Maximum Budget rang" />
+          </div>
+          <!-- ****** -->
+          <div class="budgetRange d-flex gap-2 align-items-center mb-3">
+            <label for="maxBudget">Maximum Budget Range ($) :</label>
+            <p-inputNumber [(ngModel)]="maxBudget" inputId="maxBudget" mode="decimal" [min]="0 " [max]="1000000"
+              formControlName="budgetRangeEnd" placeholder="Enter the Maximum Budget rang" />
+          </div>
+
+          <!-- **** -->
+          <div class="budgetRange d-flex gap-2 align-items-center mb-3">
+            <label for="days">Days posted:</label>
+            <p-inputNumber [(ngModel)]="daysPosted" inputId="days" mode="decimal" [min]="0" [max]="7"
+              formControlName="daysPosted" placeholder="Days posted" />
+          </div>
+          <!-- ***** -->
+
+          <div class="payment d-flex align-items-center gap-2">
+            <label class="">Payment Verified ? :</label>
+            <p-inputSwitch formControlName="verifiedPaymentOnly" />
+          </div>
+          <!-- ***** -->
+          <div class="text-center my-2"><button class="btn bg-body-secondary " type="submit"
+              [disabled]="firstForm.invalid">Submit</button></div>
+        </form>
+        }
+        <div class="flex pt-4 justify-content-end">
+          <p-button (onClick)="nextCallback.emit()" [disabled]="!sucessFirst" label="Next" icon="pi pi-arrow-right"
+            iconPos="right" />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel>
+
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button class=" border-none inline-flex flex-column gap-2" (click)="onClick.emit()" [ngClass]="{
+          'bg-primary border-primary': index <= active,
+          'surface-border': index > active
+      }">
+          <span class="border-round border-2  inline-flex align-items-center justify-content-center" [ngClass]="{
+                        'bg-primary border-primary': index <= active,
+                        'surface-border': index > active
+                    }">
+            <i class="pi pi-star" [ngClass]="{
+              'text-white': index <= active,
+              'surface-border': index > active
+          }"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
+        <div class="d-flex flex-column gap-2 ">
+          <h4 class="text-center mt-3 mb-3 text-xl font-semibold">Gemini </h4>
+          @if(isSubmitted){
+          <div class="d-flex justify-content-center align-items-center"> <i class="pi pi-spin pi-spinner"
+              style="font-size: 6rem"></i>
+          </div>
+
+          }@else if (sucessSec){
+
+          <div class="alert alert-success text-center " role="alert">
+
+            {{sucessMessageSec}}
+          </div>
+          }
+          @else{
+          <form [formGroup]="secondForm" (ngSubmit)="submitSecondForm()">
+            <div class="skills d-flex gap-3 ">
+              <label for="priceRate">Enter Your Skills :</label>
+              <p-chips formControlName="skills" placeholder="Enter Your skills spereted with 'enter'"></p-chips>
+            </div>
+
+            <!-- ****** -->
+            <div class="price  d-flex gap-2  mb-3">
+              <label for="priceRate"> Your Price Rate ($):</label>
+              <p-inputNumber [(ngModel)]="priceRate" inputId="priceRate" mode="decimal" [min]="0" [max]="10000"
+                formControlName="priceRate" placeholder="Your Price Rate " />
+            </div>
+            <!-- ************ -->
+            <div class="level-of-exp field-checkbox  d-flex justify-content-start gap-3 mb-4 ">
+              <span>Level Of Experience :</span>
+              @for(level of experienceLevel; track $index){
+              <div class="d-flex flex-row gap-2">
+                <p-radioButton [inputId]="level.key" [value]="level" formControlName="experienceLevel" />
+                <label [for]="level.key" class="ml-2">
+                  {{ level.name }}
+                </label>
+              </div>
+              }
+            </div>
+            <!-- ****** -->
+
+            <div class="text-center"><button class="btn bg-body-secondary " type="submit"
+                [disabled]="secondForm.invalid">Submit</button></div>
+
+
+          </form>
+          }
+        </div>
+        <div class="flex pt-4 justify-content-between">
+          <p-button (onClick)="prevCallback.emit()" label="Back" severity="secondary" icon="pi pi-arrow-left" />
+          <p-button (onClick)="nextCallback.emit()" label="Next" icon="pi pi-arrow-right" iconPos="right"
+            [disabled]="!sucessSec" />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+    <p-stepperPanel>
+      <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
+        <button class=" border-none inline-flex flex-column gap-2" (click)="onClick.emit()" [ngClass]="{
+          'bg-primary border-primary': index <= active,
+          'surface-border': index > active
+      }">
+          <span class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
+            [ngClass]="{
+                        'bg-primary border-primary': index <= active,
+                        'surface-border': index > active
+                    }">
+            <i class="pi pi-id-card"></i>
+          </span>
+        </button>
+      </ng-template>
+      <ng-template pTemplate="content" let-prevCallback="prevCallback">
+        <div class="d-flex flex-column gap-2 ">
+          <h4 class="text-center mt-3 mb-3 text-xl font-semibold">up work </h4>
+        </div>
+        @if(isSubmitted){
+        <div class="d-flex justify-content-center align-items-center"> <i class="pi pi-spin pi-spinner"
+            style="font-size: 6rem"></i>
+        </div>
+
+        }
+        @else if (sucessThi) {
+        <div class="alert alert-success text-center " role="alert">
+
+          {{sucessMessageThi}}
+        </div>
+        }
+        @else{
+        <form [formGroup]="thirdForm" (ngSubmit)="submitThirdForm()">
+          <div class="client d-flex align-content-center w-100 mb-3">
+            <label for="" class="w-25">Enter Your Client Id :</label>
+            <input type="text" class="form-control" formControlName="client_id" placeholder="Client Id">
+          </div>
+          <div class="client d-flex align-content-center w-100 mb-3">
+            <label for="" class="w-25">Enter Your Client Secret :</label>
+            <input type="text" class="form-control" formControlName="client_secret" placeholder=" Client Secret ">
+          </div>
+          <div class="text-center"><button class="btn bg-body-secondary " type="submit"
+              [disabled]="thirdForm.invalid">Submit</button></div>
+
+        </form>
+        }
+        <div class="flex pt-4 justify-content-start">
+          <p-button (onClick)="prevCallback.emit()" label="Back" severity="secondary" icon="pi pi-arrow-left" />
+        </div>
+      </ng-template>
+    </p-stepperPanel>
+  </p-stepper>
+</p-dialog>

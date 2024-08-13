@@ -29,7 +29,11 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css",
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+
               "src/styles.scss"
             ],
             "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
@@ -40,12 +44,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "2mb"
                 }
               ],
               "outputHashing": "all"

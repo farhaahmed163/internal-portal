@@ -1,15 +1,48 @@
-.p-input-icon-left {
-  input {
-    width: 540px;
-    border-radius: 30px;
-  }
-}
+.portal {
+  overflow: hidden;
+  min-height: 100vh;
 
-.search-btn {
-  color: #5093E2;
-  font-size: 20px;
-  font-weight: 600;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  .head {
+    border-bottom: 1px solid #cccc;
+
+    .example-spacer {
+      flex: 1 1 auto;
+    }
+
+    .example-container {
+      width: auto;
+      height: 200px;
+      margin: 10px;
+      border: 1px solid #555;
+      background: #eee;
+
+
+    }
+
+    .logout {
+      border-radius: 30px;
+      background: #E7EEF5;
+      color: #302f2f;
+      padding: 10px 30px;
+    }
+
+    mat-toolbar {
+      position: relative;
+      z-index: 5;
+      background-color: transparent;
+      padding: 0;
+    }
+  }
+
+  .mat-drawer-inner-container {
+    background-color: #F8F8F8;
+  }
+
+  .row {
+    .side {
+      // background: #eee;
+    }
+  }
 
 }
 
@@ -115,4 +148,13 @@ button:focus {
       font-size: 14px;
     }
   }
+}
+
+.main {
+  min-height: 100vh;
+}
+
+mat-drawer,
+mat-drawer-content {
+  transition: all 500ms ease-in-out;
 }
